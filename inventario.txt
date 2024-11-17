@@ -1,0 +1,24 @@
+laptop,electronico,20.0,20
+raton,accesorio,8.0,30
+teclado,accesorio,12.5,15
+monitor,electronico,150.0,10
+impresora,electronico,85.0,5
+altavoces,accesorio,25.0,25
+tablet,electronico,200.0,8
+auriculares,accesorio,18.0,40
+micrófono,accesorio,50.0,12
+cámara,electronico,200.0,6
+móvil,electronico,400.0,15
+ratón inalámbrico,accesorio,20.0,20
+pantalla curva,electronico,500.0,8
+webcam,electronico,45.0,25
+parlante portátil,accesorio,30.0,40
+teclado mecánico,accesorio,80.0,12
+tablet pro,electronico,350.0,6
+cargador inalámbrico,accesorio,15.0,35
+disco duro externo,electronico,100.0,18
+impresora láser,electronico,120.0,10
+cable HDMI,accesorio,12.0,50
+bocina inteligente,accesorio,90.0,10
+smartwatch,electronico,150.0,20
+silla ergonómica,accesorio,150.0,7
