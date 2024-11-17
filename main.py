@@ -30,31 +30,63 @@ class VentanaInventario:
         self.cantidad_entry = tk.Entry(root)
         self.cantidad_entry.grid(row=3, column=1, padx=5, pady=5)
 
-        # Botones
-        tk.Button(root, text="Agregar", command=self.agregar_producto).grid(row=4, column=0, padx=5, pady=5)
-        tk.Button(root, text="Buscar", command=self.buscar_producto).grid(row=4, column=1, padx=5, pady=5)
-        tk.Button(root, text="Actualizar", command=self.actualizar_producto).grid(row=5, column=0, padx=5, pady=5)
-        tk.Button(root, text="Eliminar", command=self.eliminar_producto).grid(row=5, column=1, padx=5, pady=5)
-        tk.Button(root, text="Guardar en archivo", command=self.guardar_en_archivo).grid(row=6, column=0, columnspan=2, pady=10)
+       # Contenedor para los botones
+        botones_frame = tk.Frame(root)
+        botones_frame.grid(row=4, column=0, columnspan=2, pady=10)
+        
+        #sticky="w" en el grid de botones_frame: Esto asegura que el contenedor de botones se pegue al borde izquierdo del contenedor principal.
+        #padx=5 en el grid de botones_frame: Agrega un margen de 5 píxeles entre el borde izquierdo de la ventana y el primer botón.
+        #  botones_frame.grid(row=4, column=0, columnspan=2, pady=10, sticky="w", padx=5)
 
-       # Tabla para mostrar productos
-        self.tabla = ttk.Treeview(root, columns=("Nombre", "Categoría", "Precio", "Cantidad"), show="headings")
-        self.tabla.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
+        # Botones dentro del contenedor
+        tk.Button(botones_frame, text="Agregar", command=self.agregar_producto).grid(row=0, column=0, padx=5, pady=5)
+        tk.Button(botones_frame, text="Buscar", command=self.buscar_producto).grid(row=0, column=1, padx=5, pady=5)
+        tk.Button(botones_frame, text="Actualizar", command=self.actualizar_producto).grid(row=0, column=2, padx=5, pady=5)
+        tk.Button(botones_frame, text="Eliminar", command=self.eliminar_producto).grid(row=0, column=3, padx=5, pady=5)
+        # tk.Button(root, text="Guardar en archivo", command=self.guardar_en_archivo).grid(row=6, column=0, columnspan=2, pady=10)
+
+      # Frame para contener la tabla y los scrollbars
+        tabla_frame = tk.Frame(root)
+        tabla_frame.grid(row=5, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
+
+        # Tabla para mostrar productos
+        self.tabla = ttk.Treeview(tabla_frame, columns=("Nombre", "Categoría", "Precio", "Cantidad"), show="headings")
 
         # Configurar encabezados de columnas
         self.tabla.heading("Nombre", text="Nombre")
         self.tabla.heading("Categoría", text="Categoría")
         self.tabla.heading("Precio", text="Precio")
         self.tabla.heading("Cantidad", text="Cantidad")
-        
+
         self.tabla.column("Nombre", width=150, anchor="center")
         self.tabla.column("Categoría", width=100, anchor="center")
         self.tabla.column("Precio", width=80, anchor="center")
         self.tabla.column("Cantidad", width=80, anchor="center")
 
+        # Scrollbar vertical
+        scrollbar_vertical = ttk.Scrollbar(tabla_frame, orient="vertical", command=self.tabla.yview)
+        self.tabla.configure(yscrollcommand=scrollbar_vertical.set)
+
+        # Scrollbar horizontal
+        scrollbar_horizontal = ttk.Scrollbar(tabla_frame, orient="horizontal", command=self.tabla.xview)
+        self.tabla.configure(xscrollcommand=scrollbar_horizontal.set)
+
+        # Posicionamiento de la tabla y los scrollbars dentro del Frame
+        self.tabla.grid(row=0, column=0, sticky="nsew")
+        scrollbar_vertical.grid(row=0, column=1, sticky="ns")
+        scrollbar_horizontal.grid(row=1, column=0, sticky="ew")
+        # self.tabla.pack(side="left", fill="both", expand=True)
+        # scrollbar_vertical.pack(side="right", fill="y")
+        # scrollbar_horizontal.pack(side="bottom", fill="x")
+
+        #Configurar el contenedor para que la tabla y scrollbars crezcan con la ventana
+        tabla_frame.grid_rowconfigure(0, weight=1)
+        tabla_frame.grid_columnconfigure(0, weight=1)
 
         # Mostrar productos iniciales
         self.mostrar_inventario()
+
+
 
     def agregar_producto(self):
         try:
