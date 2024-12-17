@@ -4,7 +4,7 @@ teclado,accesorio,12.5,15
 monitor,electronico,150.0,10
 impresora,electronico,85.0,5
 altavoces,accesorio,25.0,25
-tablet,electronico,200.0,8
+tablet,electronico,250.0,8
 auriculares,accesorio,18.0,40
 micrófono,accesorio,50.0,12
 cámara,electronico,200.0,6

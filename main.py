@@ -43,6 +43,7 @@ class VentanaInventario:
         tk.Button(botones_frame, text="Buscar", command=self.buscar_producto).grid(row=0, column=1, padx=5, pady=5)
         tk.Button(botones_frame, text="Actualizar", command=self.actualizar_producto).grid(row=0, column=2, padx=5, pady=5)
         tk.Button(botones_frame, text="Eliminar", command=self.eliminar_producto).grid(row=0, column=3, padx=5, pady=5)
+        tk.Button(botones_frame, text="Limpiar", command=self.limpiar_producto).grid(row=0, column=5, padx=5, pady=5)
         # tk.Button(root, text="Guardar en archivo", command=self.guardar_en_archivo).grid(row=6, column=0, columnspan=2, pady=10)
 
       # Frame para contener la tabla y los scrollbars
@@ -83,9 +84,34 @@ class VentanaInventario:
         tabla_frame.grid_rowconfigure(0, weight=1)
         tabla_frame.grid_columnconfigure(0, weight=1)
 
+        # Evento para seleccionar fila
+        self.tabla.bind("<ButtonRelease-1>", self.seleccionar_fila)
+        self.tabla.bind("<KeyRelease>", self.seleccionar_fila)
+
         # Mostrar productos iniciales
         self.mostrar_inventario()
 
+    def seleccionar_fila(self, event):
+        # Obtener la fila seleccionada
+        item = self.tabla.focus()
+        if not item:
+            return  # Si no hay selección, salir
+
+        # Obtener los valores de la fila seleccionada
+        valores = self.tabla.item(item, "values")
+        if valores:
+            # Rellenar los campos del formulario
+            self.nombre_entry.delete(0, tk.END)
+            self.nombre_entry.insert(0, valores[0])
+
+            self.categoria_entry.delete(0, tk.END)
+            self.categoria_entry.insert(0, valores[1])
+
+            self.precio_entry.delete(0, tk.END)
+            self.precio_entry.insert(0, valores[2])
+
+            self.cantidad_entry.delete(0, tk.END)
+            self.cantidad_entry.insert(0, valores[3])
 
 
     def agregar_producto(self):
@@ -131,6 +157,15 @@ class VentanaInventario:
             self.guardar_en_archivo()
         except Exception as e:
             messagebox.showerror("Error", str(e))
+            
+    def limpiar_producto(self):
+        self.nombre_entry.delete(0, tk.END)
+        self.categoria_entry.delete(0, tk.END)
+        self.precio_entry.delete(0, tk.END)
+        self.cantidad_entry.delete(0, tk.END)
+
+        # Opcional: Notificar al usuario
+        # messagebox.showinfo("Formulario limpio", "Los campos han sido limpiados.")
 
     def guardar_en_archivo(self):
         try:
@@ -140,7 +175,7 @@ class VentanaInventario:
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
-
+   
     def cargar_desde_archivo(self):
         try:
             with open("inventario.txt", "r", encoding="utf-8") as archivo:
