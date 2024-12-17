@@ -86,7 +86,10 @@ class VentanaInventario:
 
         # Evento para seleccionar fila
         self.tabla.bind("<ButtonRelease-1>", self.seleccionar_fila)
+        self.tabla.bind("<KeyPress>", self.seleccionar_fila)
         self.tabla.bind("<KeyRelease>", self.seleccionar_fila)
+        
+       
 
         # Mostrar productos iniciales
         self.mostrar_inventario()
